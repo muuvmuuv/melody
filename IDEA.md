@@ -2,14 +2,17 @@
 
 Every command should have a `--dry-run` flag to showcase what would happen running this
 command. Melody will automatically detect the provider (GitHub, GitLab, etc.) and inform
-you about not yet compatible providers.
+you about not yet compatible providers. All flags can ne prepended with `--no-xx` as an
+alias for `false`.
 
 Melody should be written in a low-level programming language like Go, Nim or Deno. and it
-should have tests for Linux, Windows and macOS. As well as unit tests obviously.
+should have tests for Linux, Windows and macOS. As well as unit tests obviously. It should
+also be beautiful with spinners and tasks like [ora](https://github.com/sindresorhus/ora)
+or [listr2](https://github.com/cenk1cenk2/listr2/).
 
 - [Configuration](#configuration)
 - [Login](#login)
-- [Feature](#feature)
+- [Feature or Fix](#feature-or-fix)
 - [Release](#release)
 
 ## Configuration
@@ -35,21 +38,28 @@ melody login gitlab
     --password              your password
 ```
 
-## Feature
+## Feature or Fix
 
 ```
-melody feature <feature_name>
+melody feature|fix <feature_name>
 
-  Create a new feature by providing your own name.
+  Create a new feature by providing your own name and checkout
+  to that feature branch. By default it will append your username
+  to the feature prefix but you can disable that if you want.
 
-  Current configured prefix is: feature/<feature_name>
+  Current configured prefix is: feature-<your_username>-<feature_name>
+
+  Flags:
+    --no-username           remove username prefix
 ```
 
 ```
 melody feature list <...flags>
 
   Create a new feature by selecting an existing issue from your
-  repository.
+  repository. It would possibly look like that: `feature-issue-412`.
+  This will also check your remote repository for existing shared
+  features so you are not working against those.
 
   > https://docs.gitlab.com/ee/api/issues.html
 
@@ -61,6 +71,7 @@ melody feature list <...flags>
     --label                 only with label (can be used multiple times)
     --order-by              sort by an order (default is `created_at`)
     --sort                  asc or desc sorting (default is `desc`)
+    --check-remote          will check the select feature against shared features (default)
 ```
 
 ```
@@ -76,7 +87,7 @@ melody feature share [feature_name]
 melody feature finish [feature_name] <...flags>
 
   Finish the feature you are working on. This will delete the local and if present
-  remote feature branch and merge it into the configurated **develop** branch.
+  remote feature branch and merge it into the configured **develop** branch.
 
   Flags:
     --fetch                 fetch for remote changes or merge conflicts (default)
