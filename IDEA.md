@@ -7,16 +7,19 @@ you about not yet compatible providers.
 Melody should be written in a low-level programming language like Go, Nim or Deno. and it
 should have tests for Linux, Windows and macOS. As well as unit tests obviously.
 
+- [Configuration](#configuration)
+- [Login](#login)
+- [Feature](#feature)
+- [Release](#release)
+
+## Configuration
+
 All configuration will be stored globally into: `~/.config/melody/config.toml`:
 
 - tag prefix
 - develop branch name
 - master branch name (rename to main or something)
 - login token
-
-- [Login](#login)
-- [Feature](#feature)
-- [Release](#release)
 
 ## Login
 
