@@ -442,9 +442,19 @@ class Release {
           },
         },
         {
-          title: 'Pushing changes',
+          title: 'Pushing develop changes',
           task: () => {
-            return dryRun ? Promise.resolve() : execa('git', ['push'])
+            return dryRun
+              ? Promise.resolve()
+              : execa('git', ['push', 'origin', 'develop', '-o', 'ci.skip'])
+          },
+        },
+        {
+          title: 'Pushing release tag',
+          task: () => {
+            return dryRun
+              ? Promise.resolve()
+              : execa('git', ['push', 'origin', `v${currentVersion}`])
           },
         },
         {
